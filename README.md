@@ -151,17 +151,49 @@ device/{序列号}/report    # 接收状态
 ## 项目结构
 
 ```
-161-bambu-hacker/
+bambu-hacker/
 ├── bambu_h2s/              # Python 控制库
 │   ├── __init__.py
 │   ├── client.py           # MQTT 客户端封装
 │   ├── commands.py         # 56 个命令实现
 │   └── ftp.py              # FTP 文件上传
+├── demos/                  # 示例程序
+│   └── demo_square.py      # 空中绘制正方形
 ├── bambu_control.py        # 简单交互控制脚本
 ├── test_all.py             # 完整功能测试程序
 ├── test_quick.py           # 快速安全测试
-├── venv/                   # Python 虚拟环境
 └── README.md
+```
+
+## 示例程序 (demos/)
+
+### demo_square.py - 空中绘制正方形
+
+在热床上方安全高度 (Z=50mm) 控制喷头绘制正方形轨迹。
+
+**安全特性：**
+- 先执行 G28 复位，确保位置准确
+- Z 轴抬升到 50mm 安全高度
+- 每个步骤都需要用户确认
+- 可随时 Ctrl+C 中断
+- 不挤出耗材，仅移动喷头
+
+**运行方式：**
+```bash
+cd ~/161-bambu-hacker
+source venv/bin/activate
+python3 demos/demo_square.py
+```
+
+**运动轨迹：**
+```
+     (左上)────────(右上)
+        │            │
+        │   中心点   │
+        │     ●      │
+        │            │
+     (左下)────────(右下)
+           起始点
 ```
 
 ## 快速开始
